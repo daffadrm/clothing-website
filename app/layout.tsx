@@ -1,11 +1,13 @@
-import type React from "react"
-import type { Metadata } from "next"
-import { Inter } from "next/font/google"
-import "./globals.css"
-import Header from "@/components/header"
-import Footer from "@/components/footer"
+import type React from "react";
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import "./globals.css";
+import Header from "@/components/header";
+import Footer from "@/components/footer";
+import { CartProvider } from "@/context/cartContext";
+import { Toaster } from "sonner";
 
-const inter = Inter({ subsets: ["latin"] })
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: {
@@ -14,21 +16,26 @@ export const metadata: Metadata = {
   },
   description: "Authentic Nepali clothing with a modern, minimalist approach.",
   keywords: ["clothing", "fashion", "Nepal", "sustainable", "handcrafted"],
-    generator: 'v0.dev'
-}
+  generator: "v0.dev",
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-white text-neutral-900 min-h-screen flex flex-col`}>
-        <Header />
-        <main className="flex-grow">{children}</main>
-        <Footer />
+      <body
+        className={`${inter.className} bg-white text-neutral-900 min-h-screen flex flex-col`}
+      >
+        <CartProvider>
+          <Header />
+          <main className="flex-grow">{children}</main>
+          <Footer />
+          <Toaster position="top-right" richColors closeButton />
+        </CartProvider>
       </body>
     </html>
-  )
+  );
 }
